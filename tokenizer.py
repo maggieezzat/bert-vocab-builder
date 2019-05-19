@@ -113,7 +113,7 @@ def decode(tokens):
   return "".join(ret)
 
 
-def _read_filepattern(filepattern, max_lines=None, split_on_newlines=True):
+def _read_filepattern(filepattern, do_lower, max_lines=None, split_on_newlines=True):
   """Reads files matching a wildcard pattern, yielding the contents.
 
   Args:
@@ -135,6 +135,8 @@ def _read_filepattern(filepattern, max_lines=None, split_on_newlines=True):
     with tf.gfile.Open(filename) as f:
       if split_on_newlines:
         for line in f:
+          if do_lower:
+            line = line.lower()
           yield line.strip()
           lines_read += 1
           if max_lines and lines_read >= max_lines:
@@ -146,6 +148,8 @@ def _read_filepattern(filepattern, max_lines=None, split_on_newlines=True):
         if max_lines:
           doc = []
           for line in f:
+            if do_lower:
+              line = line.lower()
             doc.append(line)
             lines_read += 1
             if max_lines and lines_read >= max_lines:
@@ -160,7 +164,7 @@ def _read_filepattern(filepattern, max_lines=None, split_on_newlines=True):
 
 
 def corpus_token_counts(
-    text_filepattern, corpus_max_lines, split_on_newlines=True):
+    text_filepattern, corpus_max_lines,  do_lower, split_on_newlines=True):
   """Read the corpus and compute a dictionary of token counts.
 
   Args:
@@ -176,6 +180,7 @@ def corpus_token_counts(
   counts = collections.Counter()
   for doc in _read_filepattern(
       text_filepattern,
+      do_lower,
       max_lines=corpus_max_lines,
       split_on_newlines=split_on_newlines):
     counts.update(encode(_native_to_unicode(doc)))
@@ -185,7 +190,7 @@ def corpus_token_counts(
   return counts
 
 
-def vocab_token_counts(text_filepattern, max_lines):
+def vocab_token_counts(text_filepattern, do_lower, max_lines):
   """Read a vocab file and return a dictionary of token counts.
 
   Reads a two-column CSV file of tokens and their frequency in a dataset. The
@@ -200,7 +205,7 @@ def vocab_token_counts(text_filepattern, max_lines):
   """
   ret = {}
   for i, line in enumerate(
-      _read_filepattern(text_filepattern, max_lines=max_lines)):
+      _read_filepattern(text_filepattern, do_lower,  max_lines=max_lines)):
     if "," not in line:
       tf.logging.warning("Malformed vocab line #%d '%s'", i, line)
       continue

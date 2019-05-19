@@ -46,6 +46,8 @@ tf.flags.DEFINE_integer('corpus_max_lines', None,
                         'How many lines of corpus to read')
 tf.flags.DEFINE_integer('num_iterations', 4, 'Number of iterations')
 tf.flags.DEFINE_bool('split_on_newlines', True, 'Break corpus into lines.')
+
+tf.flags.DEFINE_bool('do_lower', False, 'Perform lower casing on the corpus')
 FLAGS = tf.flags.FLAGS
 
 
@@ -58,10 +60,12 @@ def main(unused_argv):
     token_counts = tokenizer.corpus_token_counts(
         FLAGS.corpus_filepattern,
         FLAGS.corpus_max_lines,
+        FLAGS.do_lower,
         split_on_newlines=FLAGS.split_on_newlines)
 
   elif FLAGS.vocab_filepattern:
     token_counts = tokenizer.vocab_token_counts(FLAGS.vocab_filepattern,
+                                                FLAGS.do_lower,
                                                 FLAGS.corpus_max_lines)
 
   else:
