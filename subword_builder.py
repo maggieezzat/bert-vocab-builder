@@ -26,6 +26,8 @@ python data_generators/text_encoder_build_subword.py \
     --corpus_max_lines=12345 \
     --output_filename=$DATA_DIR/my_problem.subword_text_encoder \
     --logtostderr
+    --min_count=100
+    --do_lower=True
 
 """
 from __future__ import absolute_import
