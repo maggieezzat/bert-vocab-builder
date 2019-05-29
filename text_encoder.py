@@ -720,14 +720,15 @@ class SubwordTextEncoder(TextEncoder):
     """Initialize alphabet from an iterable of token or subtoken strings."""
     # Include all characters from all tokens in the alphabet to guarantee that
     # any token can be encoded. Additionally, include all escaping characters.
-    alph = {c for token in tokens for c in token}
-    alph = list(alph)
-    for c in alph:
-      if u'\u4e00' <= c <= u'\u9fff' or u'\u0600' <= c <= u'\u06FF' or u'\u0750' <= c <= u'\u077F' or u'\u08A0' <= c <= u'\u08FF' or u'\uFB50' <= c <= u'\uFDFF' or u'\uFE70' <= c <= u'\uFEFF' :
-        alph.remove(c)
-    alph = set(alph)
-    #self._alphabet = {c for token in tokens for c in token}
-    self._alphabet = alph
+    
+    #alph = {c for token in tokens for c in token}
+    #alph = list(alph)
+    #for c in alph:
+    #  if u'\u4e00' <= c <= u'\u9fff' or u'\u0600' <= c <= u'\u06FF' or u'\u0750' <= c <= u'\u077F' or u'\u08A0' <= c <= u'\u08FF' or u'\uFB50' <= c <= u'\uFDFF' or u'\uFE70' <= c <= u'\uFEFF' :
+    #    alph.remove(c)
+    #alph = set(alph)
+    self._alphabet = {c for token in tokens for c in token}
+    #self._alphabet = alph
     self._alphabet |= _ESCAPE_CHARS
     self._alphabet |= _SPECIAL_CHARS
 
