@@ -56,7 +56,7 @@ else:
 _UNESCAPE_REGEX = re.compile(r"\\u|\\\\|\\([0-9]+);")
 _ESCAPE_CHARS = set(u"\\_u;0123456789")
 #_SPECIAL_CHARS = set(u"!\"\'#$%&*()`+,-./:;<=>?@[]^_{}~|")
-_SPECIAL_CHARS = set(u"\"\'#")
+_SPECIAL_CHARS = set(u"\'#")
 
 # Unicode utility functions that work with Python 2 and 3
 def native_to_unicode(s):
