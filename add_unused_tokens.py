@@ -14,7 +14,7 @@ import unicodedata
 import string
 import collections
 
-vocab_file = "/bert/bert-vocab-builder/vocab/dewiki_limited_chars_100.txt"
+vocab_file = "/bert/bert-vocab-builder/vocab/dewiki_limited_chars_1000.txt"
 
 def add_unused(vocab=vocab_file, n=1000):
 
