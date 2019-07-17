@@ -21,7 +21,7 @@ def add_unused(vocab=vocab_file, n=1000):
     with open(vocab, 'r+') as vf:
         lines = vf.readlines()
         for i in range(0, n):
-            vf.write("[unused" + str(i) + "]")
+            vf.write("[unused" + str(i) + "]" + "\n")
 
 
 def main():
